@@ -1,6 +1,6 @@
 import PRODUCTS from '../../data/testData'
 
-const initialState ={
+const initialState = {
     availableProducts:PRODUCTS,
     userProducts: PRODUCTS.filter(prod => prod.ownerId == 'u1')
 }
