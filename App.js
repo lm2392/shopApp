@@ -12,6 +12,7 @@ import ShopNavigator from "./navigation/shopNavigation";
 
 const rootReducer = combineReducers({
   products: productReducer,
+  cart: cartReducer
 });
 
 const store = createStore(rootReducer);
