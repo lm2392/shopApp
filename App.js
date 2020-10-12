@@ -1,5 +1,7 @@
 //test luis from pi
 //ugh, my pussy, >.<
+//8===D
+
 
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
