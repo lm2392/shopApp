@@ -5,6 +5,7 @@ import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
+import {composeWithDevTools} from 'redux-devtools-extension';
 
 import productReducer from "./store/reducers/products";
 import cartReducer from "./store/reducers/cart";
@@ -15,7 +16,7 @@ const rootReducer = combineReducers({
   cart: cartReducer
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 
 const fetchFonts = () => {
   return Font.loadAsync({

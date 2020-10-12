@@ -7,15 +7,19 @@ import {
   Text,
   View,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as cartActions from "../../store/actions/cart";
 
-import Colors from '../../constants/Colors'
+import Colors from "../../constants/Colors";
 
 const ProductDetailScreen = (props) => {
   const productid = props.navigation.getParam("productId");
   const selectedProduct = useSelector((state) =>
     state.products.availableProducts.find((prod) => prod.id === productid)
   );
+
+  const dispatch = useDispatch();
+
   return (
     <ScrollView>
       <View style={styles.screen}>
@@ -24,7 +28,13 @@ const ProductDetailScreen = (props) => {
           source={{ uri: selectedProduct.imageUrl }}
         />
         <View style={styles.actions}>
-        <Button color={Colors.primary} title="Add to Cart"   />
+          <Button
+            onPress={() => {
+              dispatch(cartActions.addToCart(selectedProduct))
+            }}
+            color={Colors.primary}
+            title="Add to Cart"
+          />
         </View>
         <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>
         <Text style={styles.description}>{selectedProduct.description} </Text>
@@ -40,35 +50,34 @@ ProductDetailScreen.navigationOptions = (navData) => {
 };
 
 const styles = StyleSheet.create({
-    actions:{
-        marginVertical:10,
-        alignItems:'center'
-    },
+  actions: {
+    marginVertical: 10,
+    alignItems: "center",
+  },
   image: {
     width: "100%",
     height: 300,
   },
   title: {
-    fontSize:20,
-    color: '#888',
+    fontSize: 20,
+    color: "#888",
     margin: 2,
-    textAlign:'center'
+    textAlign: "center",
   },
   description: {
-    fontFamily:"open-sans",
-    fontSize:15,
-    color: '#888',
+    fontFamily: "open-sans",
+    fontSize: 15,
+    color: "#888",
     margin: 2,
-    textAlign:'center'
+    textAlign: "center",
   },
-  price:{
-    fontFamily:"open-sans-bold",
+  price: {
+    fontFamily: "open-sans-bold",
     fontSize: 20,
-    color: '#888',
-    textAlign:'center',
-    marginVertical: 20
-  }
-  ,
+    color: "#888",
+    textAlign: "center",
+    marginVertical: 20,
+  },
   screen: {
     flex: 1,
     justifyContent: "center",
