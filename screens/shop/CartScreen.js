@@ -1,16 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 const CartScreen = props => {
+    const cartTotalAmount = useSelector(state => state.cart.totalAmount);
     return (
-        <View stylªe={styles.screen}>
-            <View>
-                <View>
-                    <Text>TOTAL: <Text>${19.99}</Text></Text>
+        <View style={styles.screen}>
+                <View style={styles.summary}>
+                    <Text style={styles.summaryText}>TOTAL: <Text style={styles.amount}>${cartTotalAmount}</Text></Text>
                     <Button title="Order Now"/>
                 </View>
-            </View>
             <View>
                 <Text>CART ITEMS</Text>
             </View>
@@ -20,9 +19,16 @@ const CartScreen = props => {
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        margin: 20
+    },
+    summary:{
+        
+    },
+    summaryText: {
+
+    },
+    amount: {
+
     }
 });
 
