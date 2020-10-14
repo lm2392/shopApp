@@ -21,11 +21,15 @@ const ProductItem = (props) => {
   return (
     <View style={styles.product}>
       <View style={styles.touchable}>
-        <TouchableCmp onPress={props.onViewDetail} useForeground>
-          <View>
+  
+          <View >
+          
             <View style={styles.imageContainer}>
-              <Image style={styles.image} source={{ uri: props.image }} />
+            <TouchableCmp onPress={props.onViewDetail} useForeground>
+              <Image style={styles.image} source={{ uri: props.image }} /> 
+              </TouchableCmp>
             </View>
+
             <View style={styles.details}>
               <Text style={styles.title}>{props.title}</Text>
               <Text style={styles.price}>${props.price.toFixed(2)}</Text>
@@ -44,7 +48,6 @@ const ProductItem = (props) => {
               />
             </View>
           </View>
-        </TouchableCmp>
       </View>
     </View>
   );
@@ -53,10 +56,9 @@ const ProductItem = (props) => {
 const styles = StyleSheet.create({
   imageContainer: {
     width: "100%",
-    height: "63%",
+    height: "65%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    overflow: "hidden",
   },
   details: {
     alignItems: "center",
@@ -64,10 +66,9 @@ const styles = StyleSheet.create({
     height: "15%",
   },
   title: {
-    marginVertical:2,
     fontFamily:"open-sans-bold",
     fontSize: 18,
-    marginVertical: 4,
+    marginVertical: 1,
   },
   price: {
     fontFamily:"open-sans",
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 10,
     backgroundColor: "white",
-    height: 300,
+    height: 280,
     margin: 20,
     overflow: "hidden",
   },
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    height: "22%",
+    height: "20%",
     paddingHorizontal: 70,
   },
 });
