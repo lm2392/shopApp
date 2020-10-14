@@ -1,8 +1,3 @@
-//test luis from pi
-//ugh, my pussy, >.<
-//8===D
-
-
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -14,11 +9,13 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 
 import productReducer from "./store/reducers/products";
 import cartReducer from "./store/reducers/cart";
+import ordersReducer from "./store/reducers/order";
 import ShopNavigator from "./navigation/shopNavigation";
 
 const rootReducer = combineReducers({
   products: productReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  orders: ordersReducer
 });
 
 const store = createStore(rootReducer, composeWithDevTools());

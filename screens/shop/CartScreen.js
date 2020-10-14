@@ -7,9 +7,10 @@ import HeaderButton from "../../components/UI/HeaderButton";
 import CartItem from "../../components/shop/CartItem";
 import Colors from "../../constants/Colors";
 import * as cartActions from "../../store/actions/cart";
+import * as ordersActions from "../../store/actions/order";
 
 
-const CartScreen = props => {
+const CartScreen = (props) => {
     const cartTotalAmount = useSelector(state => state.cart.totalAmount);
     const cartItems = useSelector(state => {
         const transformedCartItems = [];
@@ -22,7 +23,7 @@ const CartScreen = props => {
                 sum: state.cart.items[key].sum
             })
         }
-        return transformedCartItems;
+        return transformedCartItems.sort((a, b) => a.productId > b.productId ? 1 : -1);
      });
 
 const dispatch = useDispatch();
@@ -31,7 +32,13 @@ const dispatch = useDispatch();
         <View style={styles.screen}>
                 <View style={styles.summary}>
                     <Text style={styles.summaryText}>TOTAL: <Text style={styles.amount}>${cartTotalAmount.toFixed(2)} </Text></Text> 
-                    <Button color={Colors.accent} title='Order Now' disabled={cartItems.length === 0}/>
+                    <Button 
+                    color={Colors.accent} title='Order Now'
+                    disabled={cartItems.length === 0}
+                    onPress={() => {
+                      dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
+                    }}
+                    />
                 </View>
         <FlatList 
             data={cartItems}
