@@ -29,7 +29,7 @@ const styles=StyleSheet.create({
         backgroundColor: 'white', 
         flexDirection: 'row',
         justifyContent: 'space-between', 
-        marginHorizontal: 20
+        marginHorizontal: 20,
     },
     itemData: {
         flexDirection: 'row',
@@ -43,7 +43,7 @@ const styles=StyleSheet.create({
     },
     mainText: {
         fontFamily:'open-sans-bold',
-        fontSize: 16
+        fontSize: 14,
     },
     deleteButton: {
         marginLeft: 20
