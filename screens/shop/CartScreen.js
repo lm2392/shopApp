@@ -1,11 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View, FlatList, Button } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI/HeaderButton";
 
 import CartItem from "../../components/shop/CartItem";
 import Colors from "../../constants/Colors";
+import * as cartActions from "../../store/actions/cart";
+
 
 const CartScreen = props => {
     const cartTotalAmount = useSelector(state => state.cart.totalAmount);
@@ -23,6 +25,8 @@ const CartScreen = props => {
         return transformedCartItems;
      });
 
+const dispatch = useDispatch();
+
     return (
         <View style={styles.screen}>
                 <View style={styles.summary}>
@@ -37,7 +41,10 @@ const CartScreen = props => {
                     quantity={itemData.item.quantity}
                     title={itemData.item.productTitle}
                     amount={itemData.item.sum}
-                   
+                    onRemove = {() => {
+                      dispatch (cartActions.removeFromCart(itemData.item.productId));
+                    }}
+         
                 />
             )}
         />
