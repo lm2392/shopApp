@@ -1,11 +1,8 @@
-import React {useState} from "react";
+import React from "react";
 import {View, Text, StyleSheet, Button} from "react-native";
 import Colors from "../../constants/Colors";
 
 const OrderItem = props => {
-
-    const [showDetails, setShowDetails] = useState(false);
-
     return  <View style={styles.orderItem}>
         <View style={styles.summary}>
             <Text style={styles.totalAmount}>
@@ -15,7 +12,7 @@ const OrderItem = props => {
             {props.date}
             </Text>
         </View>
-        <Button color={Colors.primary} title="Show Detail" onPress = { () => {}}/>
+        <Button color={Colors.primary} title="Show Detail" onPress={() => {}}/>
     </View>
 };
 
