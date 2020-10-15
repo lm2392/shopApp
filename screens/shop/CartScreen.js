@@ -13,7 +13,7 @@ import * as ordersActions from "../../store/actions/order";
 const CartScreen = (props) => {
     const cartTotalAmount = useSelector(state => state.cart.totalAmount);
     const cartItems = useSelector(state => {
-        const transformedCartItems = [0,1 ];
+        const transformedCartItems = [];
         for (const key in state.cart.items) {
             transformedCartItems.push ({ 
                 productId: key,
@@ -21,9 +21,7 @@ const CartScreen = (props) => {
                 productPrice: state.cart.items[key].productPrice,
                 quantity: state.cart.items[key].quantity,
                 sum: state.cart.items[key].sum
-            }
-            if
-            )
+            })
         }
         return transformedCartItems.sort((a, b) => a.productId > b.productId ? 1 : -1);
      });
