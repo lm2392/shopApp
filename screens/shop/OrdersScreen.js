@@ -8,15 +8,16 @@ import Colors from "../../constants/Colors";
 
 const OrdersScreen = props => {
 
-const orderss = useSelector(state => state.orders.orders);
+const orders = useSelector(state => state.orders.orders);
 
     return ( 
         <FlatList
-        data = {orderss}
+        data = {orders}
         keyExtractor = {item =>item.id} 
         renderItem = {itemData => <OrderItem 
             amount={itemData.item.totalAmount} 
             date={itemData.item.readableDate} 
+            items = {itemData.item.items}
             /> }
     />
     );
@@ -36,15 +37,15 @@ OrdersScreen.navigationOptions = navData => {
           />
         </HeaderButtons>
       ),
-    headerLeft: ( <HeaderButtons HeaderButtonComponent={HeaderButton}>
-    <Item
-      title="Menu"
-      iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
-      onPress={() => {
-        navData.navigation.toggleDrawer();
-      }}
-    />
-  </HeaderButtons>),
+    headerLeft: () => (<HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title="Menu"
+        iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
+        onPress={() => {
+          navData.navigation.toggleDrawer();
+        }}
+      />
+    </HeaderButtons>),
     };
 };
 

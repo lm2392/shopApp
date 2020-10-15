@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import {View, Text, StyleSheet, Button} from "react-native";
 import Colors from "../../constants/Colors";
 import CartItem from '../../components/shop/CartItem'
+
 const OrderItem = props => {
     
     const [showDetails, setShowDetails] = useState(false)
@@ -19,7 +20,13 @@ const OrderItem = props => {
             setShowDetails(prevState => !prevState)
         }}/>
         {showDetails && <View>
-            {props.items.map(cartItem => <CartItem quantity={cartItem.quantity} amount={cartItem.sum} title={cartItem.productTitle}/> )}
+            {props.items.map(cartItem => 
+            <CartItem 
+            key = {cartItem.productId}
+            quantity={cartItem.quantity} 
+            amount={cartItem.sum} 
+            title={cartItem.productTitle}/> 
+            )}
             </View>}
     </View>
 };
