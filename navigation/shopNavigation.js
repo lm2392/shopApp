@@ -9,7 +9,7 @@ import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import CartScreen from '../screens/shop/CartScreen';
 import OrdersScreen from '../screens/shop/OrdersScreen';
 import Colors from '../constants/Colors';
-
+import UserProductsScreen from '../screens/user/UserProductsScreen'
 
 const defaultNavOptions = {
   headerStyle:{
