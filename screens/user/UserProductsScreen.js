@@ -9,7 +9,8 @@ const UserScreen = props => {
 
     return (
        
-       <FlatList data={userProducts} keyExtractor={item => item.id} 
+       <FlatList data={userProducts} 
+       keyExtractor={item => item.id} 
         renderItem={itemData => 
             <ProductItem 
             image = {itemData.item.imageUrl}
