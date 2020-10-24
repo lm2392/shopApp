@@ -1,102 +1,70 @@
-import React from "react";
+import React from 'react';
 import {
-  StyleSheet,
+  ScrollView,
+  View,
+  Text,
   Image,
   Button,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import * as cartActions from "../../store/actions/cart";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import HeaderButton from "../../components/UI/HeaderButton";
+  StyleSheet
+} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
+import Colors from '../../constants/Colors';
+import * as cartActions from '../../store/actions/cart';
 
-import Colors from "../../constants/Colors";
-
-const ProductDetailScreen = (props) => {
-  const productid = props.navigation.getParam("productId");
-  const selectedProduct = useSelector((state) =>
-    state.products.availableProducts.find((prod) => prod.id === productid)
+const ProductDetailScreen = props => {
+  const productId = props.navigation.getParam('productId');
+  const selectedProduct = useSelector(state =>
+    state.products.availableProducts.find(prod => prod.id === productId)
   );
-
   const dispatch = useDispatch();
 
   return (
     <ScrollView>
-      <View style={styles.screen}>
-        <Image
-          style={styles.image}
-          source={{ uri: selectedProduct.imageUrl }}
+      <Image style={styles.image} source={{ uri: selectedProduct.imageUrl }} />
+      <View style={styles.actions}>
+        <Button
+          color={Colors.primary}
+          title="Add to Cart"
+          onPress={() => {
+            dispatch(cartActions.addToCart(selectedProduct));
+          }}
         />
-        <View style={styles.actions}>
-          <Button
-            onPress={() => {
-              dispatch(cartActions.addToCart(selectedProduct))
-            }}
-            color={Colors.primary}
-            title="Add to Cart"
-          />
-        </View>
-        <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>
-        <Text style={styles.description}>{selectedProduct.description} </Text>
       </View>
+      <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>
+      <Text style={styles.description}>{selectedProduct.description}</Text>
     </ScrollView>
   );
 };
 
-ProductDetailScreen.navigationOptions = (navData) => {
+ProductDetailScreen.navigationOptions = navData => {
   return {
-    headerTitle: navData.navigation.getParam("productTitle"),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Cart"
-          iconName={Platform.OS === "android" ? "md-cart" : "ios-cart"}
-          onPress={() => {
-            navData.navigation.navigate("Cart");
-          }}
-        />
-      </HeaderButtons>
-    ),
+    headerTitle: navData.navigation.getParam('productTitle')
   };
 };
 
 const styles = StyleSheet.create({
+  image: {
+    width: '100%',
+    height: 300
+  },
   actions: {
     marginVertical: 10,
-    alignItems: "center",
-  },
-  image: {
-    width: "100%",
-    height: 300,
-  },
-  title: {
-    fontSize: 20,
-    color: "#888",
-    margin: 2,
-    textAlign: "center",
-  },
-  description: {
-    fontFamily: "open-sans",
-    fontSize: 15,
-    color: "#888",
-    margin: 2,
-    textAlign: "center",
+    alignItems: 'center'
   },
   price: {
-    fontFamily: "open-sans-bold",
     fontSize: 20,
-    color: "#888",
-    textAlign: "center",
+    color: '#888',
+    textAlign: 'center',
     marginVertical: 20,
+    fontFamily: 'open-sans-bold'
   },
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  description: {
+    fontFamily: 'open-sans',
+    fontSize: 14,
+    textAlign: 'center',
+    marginHorizontal: 20
+  }
 });
 
 export default ProductDetailScreen;
