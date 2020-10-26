@@ -48,6 +48,31 @@ const PRODUCTS = [
     'https://cdn.pixabay.com/photo/2015/10/03/02/14/pen-969298_1280.jpg',
     "Can be used for role-playing (not the kind of role-playing you're thinking about...).",
     5.49
+  ),
+  new Product(
+    'p7',
+    'u1',
+    'Tesla',
+    'https://cdn.shopify.com/s/files/1/1724/5219/articles/deep-blue-metallic-tesla-model-3-20-inch-matte-black-tst-turbine-style-wheels-wm-2_1280x.jpg?v=1537225779',
+    "Blue Model 3",
+    33000.00
+  ),
+  new Product(
+    'p8',
+    'u1',
+    'Yeezy',
+    'https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2017%2F08%2Fyeezy-supply-kanye-west-wave-runner-700-6.jpg?w=960&cbr=1&q=90&fit=max',
+    "Yeezy BOOST 700",
+    350.00
+  )
+  ,
+  new Product(
+    'p9',
+    'u1',
+    'IPhone',
+    'https://specials-images.forbesimg.com/imageserve/5f29eb9fb26734f0feb82e44/960x0.jpg?fit=scale',
+    "Newest Iphone",
+    1100.00
   )
 ];
 

@@ -15,24 +15,17 @@ import * as productsActions from '../../store/actions/products';
 
 const EditProductScreen = props => {
   const prodId = props.navigation.getParam('productId');
-  const editedProduct = useSelector(state =>
-    state.products.userProducts.find(prod => prod.id === prodId)
-  );
+  const editedProduct = useSelector(state => state.products.userProducts.find(prod => prod.id === prodId));
   const dispatch = useDispatch();
-
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
-  const [imageUrl, setImageUrl] = useState(
-    editedProduct ? editedProduct.imageUrl : ''
-  );
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState(
-    editedProduct ? editedProduct.description : ''
-  );
+  const [imageUrl, setImageUrl] = useState( editedProduct ? editedProduct.imageUrl : '');
+  const [price, setPrice] = useState(editedProduct ? editedProduct.price : '');
+  const [description, setDescription] = useState( editedProduct ? editedProduct.description : '');
 
   const submitHandler = useCallback(() => {
     if (editedProduct) {
       dispatch(
-        productsActions.updateProduct(prodId, title, description, imageUrl)
+        productsActions.updateProduct(prodId, title, description, imageUrl, parseFloat(price))
       );
     } else {
       dispatch(
@@ -65,16 +58,14 @@ const EditProductScreen = props => {
             onChangeText={text => setImageUrl(text)}
           />
         </View>
-        {editedProduct ? null : (
           <View style={styles.formControl}>
             <Text style={styles.label}>Price</Text>
             <TextInput
               style={styles.input}
-              value={price}
+              value={price.toString()}
               onChangeText={text => setPrice(text)}
             />
           </View>
-        )}
         <View style={styles.formControl}>
           <Text style={styles.label}>Description</Text>
           <TextInput
@@ -91,9 +82,7 @@ const EditProductScreen = props => {
 EditProductScreen.navigationOptions = navData => {
   const submitFn = navData.navigation.getParam('submit');
   return {
-    headerTitle: navData.navigation.getParam('productId')
-      ? 'Edit Product'
-      : 'Add Product',
+    headerTitle: (navData.navigation.getParam('productId') ? 'Edit Product': 'Add Product'),
     headerRight: () =>  (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item

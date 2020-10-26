@@ -64,7 +64,7 @@ UserProductsScreen.navigationOptions = navData => {
   return {
     headerTitle: 'Your Products',
     headerLeft: () =>  (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <HeaderButtons HeaderButtonComponent = {HeaderButton}>
         <Item
           title="Menu"
           iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}

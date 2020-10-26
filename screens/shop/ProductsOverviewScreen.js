@@ -9,7 +9,17 @@ import * as cartActions from '../../store/actions/cart';
 import Colors from '../../constants/Colors';
 
 const ProductsOverviewScreen = props => {
+
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   const products = useSelector(state => state.products.availableProducts);
+ 
   const dispatch = useDispatch();
 
   const selectItemHandler = (id, title) => {
@@ -21,7 +31,7 @@ const ProductsOverviewScreen = props => {
 
   return (
     <FlatList
-      data={products}
+      data={shuffle(products)}
       keyExtractor={item => item.id}
       renderItem={itemData => (
         <ProductItem

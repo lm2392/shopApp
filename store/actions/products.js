@@ -18,7 +18,7 @@ export const createProduct = (title, description, imageUrl, price) => {
   };
 };
 
-export const updateProduct = (id, title, description, imageUrl) => {
+export const updateProduct = (id, title, description, imageUrl, price) => {
   return {
     type: UPDATE_PRODUCT,
     pid: id,
@@ -26,6 +26,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
       title,
       description,
       imageUrl,
+      price
     }
   };
 };
