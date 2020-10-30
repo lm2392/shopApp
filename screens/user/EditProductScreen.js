@@ -1,28 +1,59 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useReducer } from 'react';
 import {
   View,
   ScrollView,
   Text,
   TextInput,
   StyleSheet,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import * as productsActions from '../../store/actions/products';
+const reducer_update = 'UPDATE'
+
+const formReducer = (state, action) => { 
+  if(action.type === reducer_update ){
+
+  }
+}
 
 const EditProductScreen = props => {
   const prodId = props.navigation.getParam('productId');
   const editedProduct = useSelector(state => state.products.userProducts.find(prod => prod.id === prodId));
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
+  useReducer(formReducer,
+     {inputValues: {
+       title : editedProduct ? editedProduct.title : '',
+       imageUrl : editedProduct ? editedProduct.imageUrl : '',
+       description : editedProduct ? editedProduct.description : '',
+       price: editedProduct ? editedProduct.price : ''
+     },
+     inputValidities:{
+      title : editedProduct ? true: false,
+      imageUrl : editedProduct ? true: false,
+      description : editedProduct ? true: false,
+      price: editedProduct ? true: false
+     },
+      formValid: false});
+
+  const [titleIsValid, setTitleIsValid] = useState(false);
+
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
   const [imageUrl, setImageUrl] = useState( editedProduct ? editedProduct.imageUrl : '');
   const [price, setPrice] = useState(editedProduct ? editedProduct.price : '');
   const [description, setDescription] = useState( editedProduct ? editedProduct.description : '');
 
   const submitHandler = useCallback(() => {
+    
+    if(!titleIsValid){
+      Alert.alert('Wrong input','Please check the errors in the form',[{text: 'OK'}])
+      return;
+    }
+
     if (editedProduct) {
       dispatch(
         productsActions.updateProduct(prodId, title, description, imageUrl, parseFloat(price))
@@ -33,11 +64,21 @@ const EditProductScreen = props => {
       );
     }
     props.navigation.goBack();
-  }, [dispatch, prodId, title, description, imageUrl, price]);
+  }, [dispatch, prodId, title, description, imageUrl, price, titleIsValid]);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
   }, [submitHandler]);
+
+  const titleChangeHandler = text => {
+    if(text.trim().Length === 0){
+      setTitleIsValid(false)
+    }else{
+      setTitleIsValid(true)
+    }
+    setTitle(text);
+  }
+
 
   return (
     <ScrollView>
@@ -47,8 +88,15 @@ const EditProductScreen = props => {
           <TextInput
             style={styles.input}
             value={title}
-            onChangeText={text => setTitle(text)}
+            onChangeText = {titleChangeHandler}
+            keyboardType='default'
+            autoCapitalize='sentences'
+            autoCorrect
+            returnKeyType='next'
+            onEndEditing={()=> console.log('test end edit')}
+            onSubmitEditing={()=> console.log('test submit edit')}
           />
+          {!titleIsValid && <Text>Please enter valid title!</Text>}
         </View>
         <View style={styles.formControl}>
           <Text style={styles.label}>Image URL</Text>
@@ -56,6 +104,7 @@ const EditProductScreen = props => {
             style={styles.input}
             value={imageUrl}
             onChangeText={text => setImageUrl(text)}
+            returnKeyType='next'
           />
         </View>
           <View style={styles.formControl}>
@@ -64,6 +113,8 @@ const EditProductScreen = props => {
               style={styles.input}
               value={price.toString()}
               onChangeText={text => setPrice(text)}
+              keyboardType= 'decimal-pad'
+              returnKeyType='next'
             />
           </View>
         <View style={styles.formControl}>
@@ -72,6 +123,7 @@ const EditProductScreen = props => {
             style={styles.input}
             value={description}
             onChangeText={text => setDescription(text)}
+            returnKeyType='next'
           />
         </View>
       </View>
