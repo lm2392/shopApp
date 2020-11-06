@@ -139,7 +139,7 @@ const EditProductScreen = props => {
         
 
       <Input 
-          id='description'
+          id='descriptions'
           label = 'Description'
           errorText = 'Please enter a valid Description!'
           keyboardType= "default"
