@@ -69,6 +69,7 @@ const Input = props => {
         {...props}
         style={styles.input}
         value={inputState.value}
+        blurOnSubmit={true}
         onChangeText={textChangeHandler}
         onBlur={lostFocusHandler}
       />

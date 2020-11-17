@@ -7,10 +7,17 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 
 export const fetchProducts  = () => { 
   return async dispatch =>  {
-    const response = await fetch ('https://cosmichaus.firebaseio.com/products.json'
-  );
-const resData = await response.json();
-const loadedProducts = [];
+
+    try{
+      
+      const response = await fetch('https://cosmichaus.firebaseio.com/products.json');
+
+      if(!response.ok){
+        throw new Error('Something went wrong!');
+      }
+
+    const resData = await response.json();
+    const loadedProducts = [];
     for (const key in resData) {
       loadedProducts.push(
         new Product(
@@ -23,7 +30,10 @@ const loadedProducts = [];
         ));
     }
 
-dispatch ({type: SET_PRODUCTS, products: loadedProducts});
+  dispatch ({type: SET_PRODUCTS, products: loadedProducts});
+    } catch(err){
+      throw err;
+    }
   };
 }; 
 
@@ -31,11 +41,16 @@ export const deleteProduct = productId => {
 
 return async dispatch => {
 
-  await fetch (`https://cosmichaus.firebaseio.com/products/${productId}.json`, 
+  const response = await fetch (`https://cosmichaus.firebaseio.com/products/${productId}.json`, 
   {
       method: 'DELETE'
 
     });
+
+  if (!response.ok){
+      throw new Error('Something went wrong')
+  }
+
 
   dispatch({ type: DELETE_PRODUCT, pid: productId });
 };
@@ -43,7 +58,8 @@ return async dispatch => {
 
 export const createProduct = (title, description, imageUrl, price) => {
   return async dispatch =>  {
-    const response = await fetch ('https://cosmichaus.firebaseio.com/products.json', {
+    const response = await fetch ('https://cosmichaus.firebaseio.com/products.json', 
+    {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -58,7 +74,6 @@ export const createProduct = (title, description, imageUrl, price) => {
     const resData = await response.json();
 
    dispatch({
-
       type: CREATE_PRODUCT,
       productData: {
         id: resData.name,
@@ -66,7 +81,6 @@ export const createProduct = (title, description, imageUrl, price) => {
         description,
         imageUrl,
         price
-
       }
     });
   }
@@ -74,20 +88,24 @@ export const createProduct = (title, description, imageUrl, price) => {
 
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return async dispatch => { 
-await fetch (`https://cosmichaus.firebaseio.com/products/${id}.json`, {
-      method: 'PATCH',
-      headers: {
-'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 
-        title, 
-        description,
-        imageUrl,
-      }) 
-    });
+  return async dispatch => {
+    const response = await fetch(`https://cosmichaus.firebaseio.com/products/${id}.json`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          imageUrl
+        })
+      }
+    );
 
-    const resData = await response.json();
+    if (!response.ok){
+        throw new Error('Something went wrong')
+    }
 
     dispatch({
       type: UPDATE_PRODUCT,
@@ -95,8 +113,7 @@ await fetch (`https://cosmichaus.firebaseio.com/products/${id}.json`, {
       productData: {
         title,
         description,
-        imageUrl,
-        price
+        imageUrl
       }
     });
   };
